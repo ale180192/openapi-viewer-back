@@ -1,9 +1,9 @@
 from rest_framework import serializers
 
-from apis.models import ApiModel
+from apis.models import Api
 
 class ApiSerializer(serializers.ModelSerializer):
 
     class Meta:
-        model = ApiModel
+        model = Api
         fields = ['name', 'description']

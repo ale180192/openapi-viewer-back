@@ -4,10 +4,12 @@ from rest_framework.generics import RetrieveUpdateDestroyAPIView
 from rest_framework.response import Response
 
 from apis.serializers import ApiSerializer
-from apis.models import ApiModel
+from apis.models import Api
+from apis.filters import ApiFilter
 
 class ApiListView(ListCreateAPIView):
 
     serializer_class = ApiSerializer
-    queryset = ApiModel.objects.all()
+    queryset = Api.objects.all()
+    filterset_class = ApiFilter
     
