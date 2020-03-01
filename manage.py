@@ -14,6 +14,10 @@ def main():
             "available on your PYTHONPATH environment variable? Did you "
             "forget to activate a virtual environment?"
         ) from exc
+    from django.conf import settings
+    if settings.DEBUG is True:
+        import ptvsd
+        #ptvsd.enable_attach(address=('127.0.0.1', 8855))
     execute_from_command_line(sys.argv)
 
 

@@ -6,4 +6,4 @@ class ApiSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Api
-        fields = ['name', 'description']
+        fields = ['name', 'description', 'user']
