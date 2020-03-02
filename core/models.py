@@ -23,7 +23,9 @@ class UserManager(BaseUserManager):
         rol = Rol.objects.get(name='admin')
         user = self.model(
             username=self.normalize_email(username),
-            rol=rol
+            rol=rol,
+            is_staff=True,
+            is_superuser=True
         )
         user.set_password(password)
         user.save()
@@ -36,6 +38,8 @@ class Rol(models.Model):
 class User(AbstractUser):
     username = models.EmailField(max_length=32, unique=True)
     is_active = models.BooleanField(null=False, default=True)
+    is_staff = models.BooleanField(null=False, default=False)
+    is_superuser = models.BooleanField(null=False, default=False)
     rol = models.ForeignKey(to=Rol, on_delete=models.SET_NULL, null=True)
     created_at = models.DateTimeField(auto_now=False, auto_now_add=True)
 

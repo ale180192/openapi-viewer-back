@@ -8,6 +8,9 @@ from rest_framework.generics import ListCreateAPIView
 from rest_framework.generics import RetrieveUpdateDestroyAPIView
 from rest_framework.response import Response
 from rest_framework import status
+from rest_framework.authentication import BasicAuthentication
+from rest_framework.permissions import IsAuthenticated
+
 
 from apis.serializers import ApiSerializer
 from apis.models import Api
@@ -15,6 +18,8 @@ from apis.filters import ApiFilter
 from .filter_backend import CustomFilterBackend
 
 class ApiViewList(APIView):
+
+    permission_classes = [IsAuthenticated]
 
     def get(self, request):
         print('get myview')
