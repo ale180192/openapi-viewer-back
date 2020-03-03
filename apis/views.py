@@ -2,15 +2,18 @@ from django.views import View
 from django.http.response import HttpResponse
 from django.core.exceptions import ObjectDoesNotExist
 from django.http import Http404
+from django.contrib.sessions.middleware import SessionMiddleware
+from django.contrib.sessions.backends import cache
+from django.contrib.auth.middleware import AuthenticationMiddleware
 
 from rest_framework.views import APIView
 from rest_framework.generics import ListCreateAPIView
 from rest_framework.generics import RetrieveUpdateDestroyAPIView
 from rest_framework.response import Response
 from rest_framework import status
-from rest_framework.authentication import BasicAuthentication
 from rest_framework.permissions import IsAuthenticated
-from django.contrib.sessions.middleware import SessionMiddleware
+from rest_framework.authentication import BasicAuthentication, SessionAuthentication
+
 
 
 from apis.serializers import ApiSerializer
@@ -20,10 +23,8 @@ from .filter_backend import CustomFilterBackend
 
 class ApiViewList(APIView):
 
-    permission_classes = [IsAuthenticated]
 
     def get(self, request):
-        print('get myview')
         queryset = Api.objects.all()
         ser = ApiSerializer(data=queryset, many=True)
         print(ser)
@@ -32,7 +33,6 @@ class ApiViewList(APIView):
 
     def post(self, request):
         data = request.data
-        print('data received is: ', data)
         ser = ApiSerializer(data=data)
         ser.is_valid(raise_exception=True)
         ser.save()

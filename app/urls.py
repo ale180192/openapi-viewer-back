@@ -16,8 +16,15 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 from django.urls import include
+from rest_framework.authtoken import views
+
+from core import views as views_core
+
 
 urlpatterns = [
     path(r'admin/', admin.site.urls),
     path(r'api/v1/', include('apis.urls'), name='apis'),
+    path(r'api/v1/', include('core.urls'), name='core'),
+    path(r'api/v1/authentication/token',  views.ObtainAuthToken.as_view()),
+    path(r'api/v1/authentication/bad_token',  views_core.ObtainBadAuthToken.as_view())
 ]
