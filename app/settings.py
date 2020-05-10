@@ -20,14 +20,16 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/2.2/howto/deployment/checklist/
-
+# matar puerto ocupado
+# lsof -nP -i4TCP:2024 | grep LISTEN
+# kill -9 74065
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = '%djw5kh1%q*#5sx#y6*4sd@e!37603enhay^3i9uc0u+&a1c2%'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -39,6 +41,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'corsheaders',
     'django_filters',
     'rest_framework',
     'rest_framework.authtoken',
@@ -49,6 +52,7 @@ INSTALLED_APPS = [
 MIDDLEWARE = [
     'core.middlewares.middlewares_test.Log1Middleware',
     'core.middlewares.middlewares_test.Log2Middleware',
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -131,10 +135,12 @@ REST_FRAMEWORK = {
         'core.utils.auth.CustomTokenAuthentication'
     ],
     'EXCEPTION_HANDLER': 'core.handlers.custom_exception_handler',
-    'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.LimitOffsetPagination',
-    'PAGE_SIZE': 10,
+    'DEFAULT_PAGINATION_CLASS': 'core.pagination.CustomNumberPagination',
     'DEFAULT_FILTER_BACKENDS': ['django_filters.rest_framework.DjangoFilterBackend']
 }
 
 # user model custom
 AUTH_USER_MODEL = 'core.User'
+
+# cors
+CORS_ORIGIN_ALLOW_ALL = True

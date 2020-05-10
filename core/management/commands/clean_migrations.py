@@ -21,12 +21,15 @@ class Command(BaseCommand):
 
     def delete_migrations_files(self, app):
         dirname = self._get_abs_path_module(app)
-        for f in os.listdir(dirname):
+        for f in os.listdir(os.path.join(dirname, 'migrations')):
             if not re.search(r'__init__', f):
                 os.remove(os.path.join(dirname, f))
 
 
-    def handler(self, *args, **options):
+    def handle(self, *args, **options):
+        import getpass
+        print(getpass.getuser())
+        print(os.getegid())
         for app in settings.INSTALLED_APPS:
             exist_app = self.exist_app_into_project(app)
             if exist_app:

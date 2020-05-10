@@ -6,3 +6,7 @@ class Api(models.Model):
     name = models.CharField(max_length=64)
     description = models.CharField(max_length=128)
     user = models.ForeignKey(to=settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='apis')
+
+class ApiFake(models.Model):
+    name = models.CharField(max_length=64)
+    description = models.CharField(max_length=128)
