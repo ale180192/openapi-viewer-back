@@ -10,3 +10,6 @@ class UserSerializer(serializers.ModelSerializer):
             'id', 'first_name', 'last_name', 'username', 'email', 
             'is_active', 'is_staff', 'is_superuser', 'created_at', 'rol', 'groups', 'user_permissions'
         ]
+
+class NotFoundSerializer(serializers.Serializer):
+    error = serializers.DictField(child = serializers.CharField())

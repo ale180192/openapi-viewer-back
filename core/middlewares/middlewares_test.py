@@ -11,20 +11,16 @@
 class Log1Middleware:
 
     def __init__(self, get_response):
-        print('call __init__ Log1Middleware')
         self.get_response = get_response
 
     def __call__(self, request):
-        print('call __call__ before Log1Middleware')
         request.META.update({'msg': 'Este es un mensaje agregado desde log 1'})
         response = self.get_response(request)
-        print('LogMiddleware after of get_response')
         return response
 
 class Log2Middleware:
 
     def __init__(self, get_response):
-        print('call __init__ Log2Middleware')
         self.get_response = get_response
 
     def __call__(self, request):

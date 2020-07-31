@@ -38,6 +38,8 @@ def custom_exception_handler(exception, context):
         response.status_code = exception.status_code
         if exception.headers is not None:
             response._headers.update(exception.headers)
+    else:
+        return response
     # error serializers validation
     if type(exception) == ValidationError:
         error_response['error_general'] = 'form_validation'
